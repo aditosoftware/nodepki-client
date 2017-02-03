@@ -9,7 +9,8 @@
 * NodeJS
 * NPM
 
-## Install
+
+## Setup
 
 ```
 git clone https://github.com/ThomasLeister/nodepki-client.git
@@ -30,13 +31,13 @@ server:
 
 ## Usage
 
-## Request new certificate via .csr file
+### Request new certificate via .csr file
 
 ```
 nodejs nodepki-client.js request --csr certificate.csr
 ```
 
-## Get list of all issued certificates
+### Get list of all issued certificates
 
 ```
 nodejs nodepki-client.js list --state valid
