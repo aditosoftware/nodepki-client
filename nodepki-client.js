@@ -11,7 +11,8 @@ var yargs = require('yargs');
 
 var subhandlers  = {
     request: require('./subcommands/request.js'),
-    list: require('./subcommands/list.js')
+    list: require('./subcommands/list.js'),
+    get: require('./subcommands/get.js')
 }
 
 
@@ -27,11 +28,16 @@ subcommands.request = function(yargs) {
     subhandlers.request(argv.csr);
 };
 
-
 subcommands.list = function(yargs) {
     log.info("Requesting list of certificates");
     var argv = yargs.demandOption(['state']).argv;
     subhandlers.list(argv.state);
+};
+
+subcommands.get = function(yargs) {
+    log.info("Requesting certificate by serial number");
+    var argv = yargs.demandOption(['serialno']).argv;
+    subhandlers.get(argv.serialno);
 };
 
 
@@ -45,6 +51,9 @@ var argv = yargs.usage("$0 command")
     })
     .command("list", "List issued certificates.", function(yargs){
         subcommands.list(yargs);
+    })
+    .command("get", "Get issued certificate by serial number", function(yargs){
+        subcommands.get(yargs);
     })
     .command("revoke", "Revoke certificate")
     .help("h")

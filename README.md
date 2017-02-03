@@ -49,3 +49,10 @@ Valid states:
 * valid
 * expired
 * revoked
+
+
+### Get certificate by serial number
+
+```
+nodejs nodepki-client.js get --serialno 324786EA
+```
