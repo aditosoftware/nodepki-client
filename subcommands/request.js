@@ -10,7 +10,12 @@ var requestCert = function(csr) {
     //Read cert data from file
     fs.readFile('./' + csr, 'utf8', function(err, csrdata){
         if(err == null) {
-            httpclient.request('/certificate/request/', 'PUT', csrdata)
+            var pushdata = {
+                csr: csrdata,
+                applicant: "John Doe"
+            }
+
+            httpclient.request('/certificate/request/', 'PUT', pushdata)
                 .then(function(response) {
                     log.info("HTTP request successful.");
 

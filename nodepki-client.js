@@ -12,7 +12,8 @@ var yargs = require('yargs');
 var subhandlers  = {
     request: require('./subcommands/request.js'),
     list: require('./subcommands/list.js'),
-    get: require('./subcommands/get.js')
+    get: require('./subcommands/get.js'),
+    revoke: require('./subcommands/revoke.js')
 }
 
 
@@ -40,6 +41,12 @@ subcommands.get = function(yargs) {
     subhandlers.get(argv.serialno);
 };
 
+subcommands.revoke = function(yargs) {
+    log.info("Revoking certificate");
+    var argv = yargs.demandOption(['certfile']).argv;
+    subhandlers.revoke(argv.certfile);
+};
+
 
 
 /**
@@ -55,7 +62,9 @@ var argv = yargs.usage("$0 command")
     .command("get", "Get issued certificate by serial number", function(yargs){
         subcommands.get(yargs);
     })
-    .command("revoke", "Revoke certificate")
+    .command("revoke", "Revoke certificate via cert file.", function(yargs){
+        subcommands.revoke(yargs);
+    })
     .help("h")
     .alias("h", "help")
     .argv

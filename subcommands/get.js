@@ -27,5 +27,4 @@ var get = function(serialno) {
 };
 
 
-
 module.exports = get;

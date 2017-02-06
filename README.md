@@ -31,6 +31,12 @@ server:
 
 ## Usage
 
+### Display subcommand overview:
+
+```
+nodejs nodepki-client.js help
+```
+
 ### Request new certificate via .csr file
 
 ```

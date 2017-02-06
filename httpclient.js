@@ -35,15 +35,10 @@ var request = function(path, method, pushdata) {
             reject();
         });
 
-        if(method === 'PUSH'){
-            var jsonobj = {
-                csr: pushdata,
-                applicant: "John Doe"
-            };
-            var json = JSON.stringify(jsonobj);
-
+        if(method === 'PUT') {
+            var json = JSON.stringify(pushdata);
             req.write(json);
-        } 
+        }
 
         // Send request
         req.end();
