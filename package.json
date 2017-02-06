@@ -26,5 +26,6 @@
       "fancy-log": "1.3.x",
       "yargs": "6.6.x",
       "js-yaml": "3.x",
+      "easy-table": "1.0.x"
   }
 }

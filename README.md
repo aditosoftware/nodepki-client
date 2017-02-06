@@ -62,3 +62,10 @@ Valid states:
 ```
 nodejs nodepki-client.js get --serialno 324786EA
 ```
+
+
+### Revoke issued certificate
+
+```
+nodejs nodepki-client.js revoke --certfile cert.pem
+```
