@@ -33,19 +33,19 @@ server:
 ### Display subcommand overview:
 
 ```
-nodejs nodepki-client.js help
+nodejs client.js help
 ```
 
 ### Request new certificate via .csr file
 
 ```
-nodejs nodepki-client.js request --csr certificate.csr --outfile cert.pem
+nodejs client.js request --csr certificate.csr --outfile cert.pem
 ```
 
 ### Get list of all issued certificates
 
 ```
-nodejs nodepki-client.js list --state all
+nodejs client.js list --state all
 ```
 ... to list all issued certificates.
 
@@ -59,12 +59,12 @@ Valid states:
 ### Get certificate by serial number
 
 ```
-nodejs nodepki-client.js get --serialno 324786EA --outfile cert.pem
+nodejs client.js get --serialno 324786EA --outfile cert.pem
 ```
 
 
 ### Revoke issued certificate
 
 ```
-nodejs nodepki-client.js revoke --cert cert.pem
+nodejs client.js revoke --cert cert.pem
 ```
