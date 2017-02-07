@@ -26,7 +26,6 @@ Configure client in config.yml: Set IP-address and port of the NodePKI server ac
 server:
     ip: localhost
     port: 8081
-
 ```
 
 ## Usage
@@ -46,9 +45,9 @@ nodejs nodepki-client.js request --csr certificate.csr
 ### Get list of all issued certificates
 
 ```
-nodejs nodepki-client.js list --state valid
+nodejs nodepki-client.js list --state all
 ```
-... to list all valid certificates.
+... to list all issued certificates.
 
 Valid states:
 * all

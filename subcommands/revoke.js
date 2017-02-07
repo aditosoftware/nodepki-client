@@ -18,7 +18,7 @@ revoke = function(certfile) {
                 cert: certdata
             };
 
-            httpclient.request('/certificate/revoke/', 'PUT', pushdata)
+            httpclient.request('/certificates/revoke/', 'PUT', pushdata)
                 .then(function(response) {
                     log.info("HTTP request successful.");
 
@@ -28,6 +28,7 @@ revoke = function(certfile) {
                         process.exit(0);
                     } else {
                         log.error(">>> Failed to revoke certificate. :( <<<");
+                        log.error("Error: " + JSON.stringify(response.errors));
                         log.error("For more information see NodePKI log.");
                         process.exit(1);
                     }

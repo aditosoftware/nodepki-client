@@ -7,9 +7,9 @@ var httpclient = require('./../httpclient.js');
 var Table = require('easy-table');
 
 list = function(state) {
-    httpclient.request('/certificates/list/' + state + '/', 'GET', null)
+    httpclient.request('/certificates/' + state + '/', 'GET', null)
         .then(function(response){
-            log.info("HTTP request was successful");
+            log.info("HTTP API request was successful");
 
             if(response.success) {
                 if(response.certs.length > 0) {
@@ -42,7 +42,7 @@ list = function(state) {
                     log("There are no certificates matching the state.");
                 }
             } else {
-                log.error("Server could not respond.");
+                log.error("Server could not respond. Errors: " + JSON.stringify(response.errors));
             }
         })
         .catch(function(error){

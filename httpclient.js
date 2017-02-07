@@ -26,7 +26,23 @@ var request = function(path, method, pushdata) {
 
             response.on('end', function() {
                 var response = JSON.parse(body);
-                resolve(response);
+
+                // Catch API Input errors:
+                if(response.success === false) {
+                    // Check if the first error is an API error (coded 100). It the first is, a second will be as well.
+                    if(response.errors[0].code === 100){
+                        // API input was invalid. Alert!
+                        response.errors.forEach(function(error) {
+                            log.error("API error: " + error.message);
+                        });
+
+                        reject("One or more API errors");
+                    } else {
+                        resolve(response);
+                    }
+                } else {
+                    resolve(response);
+                }
             });
         });
 

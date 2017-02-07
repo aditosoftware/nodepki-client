@@ -43,8 +43,8 @@ subcommands.get = function(yargs) {
 
 subcommands.revoke = function(yargs) {
     log.info("Revoking certificate");
-    var argv = yargs.demandOption(['certfile']).argv;
-    subhandlers.revoke(argv.certfile);
+    var argv = yargs.demandOption(['cert']).argv;
+    subhandlers.revoke(argv.cert);
 };
 
 

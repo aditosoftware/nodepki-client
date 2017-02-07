@@ -12,10 +12,10 @@ var requestCert = function(csr) {
         if(err == null) {
             var pushdata = {
                 csr: csrdata,
-                applicant: "John Doe"
+                applicant: "Thomas Leister"
             }
 
-            httpclient.request('/certificate/request/', 'PUT', pushdata)
+            httpclient.request('/certificates/request/', 'PUT', pushdata)
                 .then(function(response) {
                     log.info("HTTP request successful.");
 
@@ -28,6 +28,9 @@ var requestCert = function(csr) {
                         process.exit(0);
                     } else {
                         log.error(">>> Failed to retrieve certificate. :( <<<");
+
+                        log.error("Errors: " + JSON.stringify(response.errors));
+
                         log.error("Maybe there was already another certificate issued from the submitted .csr?");
                         log.error("For more information see NodePKI log.");
                         process.exit(1);

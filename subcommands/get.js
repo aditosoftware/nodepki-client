@@ -9,7 +9,7 @@ var httpclient = require('./../httpclient.js');
 var get = function(serialno) {
     log.info("Requesting issued certificate by serial number.");
 
-    httpclient.request('/certificate/' + serialno + '/get/', 'GET', null)
+    httpclient.request('/certificates/' + serialno + '/', 'GET', null)
         .then(function(response){
             log.info("Received HTTP response :-)");
 
@@ -18,7 +18,8 @@ var get = function(serialno) {
 
                 console.log("\r\n\r\n" + response.cert + "\r\n");
             } else {
-                log.error("Request response invalid.");
+                log.error("Could not get requested certificate:");
+                log.error(JSON.stringify(response.errors));
             }
         })
         .catch(function(error){
