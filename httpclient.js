@@ -1,5 +1,6 @@
 /**
- * HTTP helper function for HTTP client
+ * HTTP helper function
+ * Makes HTTP requests to server API
  */
 
 var log = require('fancy-log');
@@ -31,7 +32,7 @@ var request = function(path, method, pushdata) {
                 if(response.success === false) {
                     // Check if the first error is an API error (coded 100). It the first is, a second will be as well.
                     if(response.errors[0].code === 100){
-                        // API input was invalid. Alert!
+                        // API input was invalid.
                         response.errors.forEach(function(error) {
                             log.error("API error: " + error.message);
                         });

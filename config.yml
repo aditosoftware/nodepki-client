@@ -1,3 +1,7 @@
+###
+### Client config: IP-Adress and port of the NodePKI server
+###
+
 server:
     ip: 192.168.42.53
     port: 8081

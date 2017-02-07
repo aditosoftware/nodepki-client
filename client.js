@@ -1,6 +1,8 @@
 /*
- * Requests a certificate
- * Usage: nodejs certrequest.js
+ * NodePKI client for NodePKI server
+ *
+ * Usage information:
+ * $ nodejs client.js help
  */
 
 var http = require('http');
@@ -8,6 +10,7 @@ var fs = require('fs');
 var log = require('fancy-log');
 var yaml = require('js-yaml');
 var yargs = require('yargs');
+
 
 var subhandlers  = {
     request: require('./subcommands/request.js'),
@@ -17,10 +20,14 @@ var subhandlers  = {
 }
 
 
-log.info("Reading config file ...");
+log("Reading config file ...");
 global.config = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'));
 
 
+/*
+ * Subcommands:
+ * request, list, get, revoke
+ */
 var subcommands = {};
 
 subcommands.request = function(yargs) {
