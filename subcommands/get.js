@@ -6,7 +6,7 @@ var log = require('fancy-log');
 var httpclient = require('./../httpclient.js');
 
 
-var get = function(serialno) {
+var get = function(serialno, outfile) {
     log.info("Requesting issued certificate by serial number.");
 
     httpclient.request('/certificates/' + serialno + '/', 'GET', null)
@@ -16,7 +16,13 @@ var get = function(serialno) {
             if(response.success) {
                 log.info("Successfully received requested certificate :-)");
 
-                console.log("\r\n\r\n" + response.cert + "\r\n");
+                if(typeof outfile === 'string') {
+                    // Write certificate to file
+                    fs.writeFileSync(outfile, response.cert);
+                    log("Cert written to " + outfile);
+                } else {
+                    console.log("\r\n\r\n" + response.cert + "\r\n");
+                }
             } else {
                 log.error("Could not get requested certificate:");
                 log.error(JSON.stringify(response.errors));

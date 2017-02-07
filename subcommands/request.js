@@ -6,7 +6,7 @@ log = require('fancy-log');
 fs = require('fs');
 httpclient = require('../httpclient.js');
 
-var requestCert = function(csr) {
+var requestCert = function(csr, outfile) {
     //Read cert data from file
     fs.readFile('./' + csr, 'utf8', function(err, csrdata){
         if(err == null) {
@@ -22,8 +22,16 @@ var requestCert = function(csr) {
                     if(response.success){
                         log.info("Certificate could be retrieved :-)")
 
-                        // echo certificate
-                        console.log("\r\n\r\n" + response.cert + "\r\n");
+                        if(typeof outfile === 'string') {
+                            // Write certificate to file
+                            fs.writeFileSync(outfile, response.cert);
+                            log("Certificate written to " + outfile);
+                        } else {
+                            // echo certificate
+                            console.log("\r\n\r\n" + response.cert + "\r\n");
+                        }
+
+
 
                         process.exit(0);
                     } else {

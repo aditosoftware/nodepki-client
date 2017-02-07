@@ -39,7 +39,7 @@ nodejs nodepki-client.js help
 ### Request new certificate via .csr file
 
 ```
-nodejs nodepki-client.js request --csr certificate.csr
+nodejs nodepki-client.js request --csr certificate.csr --outfile cert.pem
 ```
 
 ### Get list of all issued certificates
@@ -59,12 +59,12 @@ Valid states:
 ### Get certificate by serial number
 
 ```
-nodejs nodepki-client.js get --serialno 324786EA
+nodejs nodepki-client.js get --serialno 324786EA --outfile cert.pem
 ```
 
 
 ### Revoke issued certificate
 
 ```
-nodejs nodepki-client.js revoke --certfile cert.pem
+nodejs nodepki-client.js revoke --cert cert.pem
 ```

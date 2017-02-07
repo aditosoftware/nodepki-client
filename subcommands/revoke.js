@@ -23,7 +23,7 @@ revoke = function(certfile) {
                     log.info("HTTP request successful.");
 
                     if(response.success){
-                        log.info("Certificate is revoked successfully.");
+                        log.info("Successfully revoked certificate");
 
                         process.exit(0);
                     } else {
