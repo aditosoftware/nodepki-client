@@ -16,7 +16,8 @@ var subhandlers  = {
     request: require('./subcommands/request.js'),
     list: require('./subcommands/list.js'),
     get: require('./subcommands/get.js'),
-    revoke: require('./subcommands/revoke.js')
+    revoke: require('./subcommands/revoke.js'),
+    getcacert: require('./subcommands/getcacert.js')
 }
 
 
@@ -89,6 +90,26 @@ subcommands.revoke = function(yargs) {
     subhandlers.revoke(argv.cert);
 };
 
+subcommands.getcacert = function(yargs) {
+    var argv = yargs
+        .option('ca', {
+            demand: true,
+            describe: "Choose which ca cert to retrieve. Can be 'root' or 'intermediate'",
+            type: 'string'
+        })
+        .option('outfile', {
+            demand: false,
+            describe: "Output file",
+            type: "string"
+        })
+        .boolean('chain')
+        .example("$0 getcacert --ca root", "Get ca cert of root ca")
+        .argv;
+    subhandlers.getcacert(argv.ca, argv.outfile, argv.chain);
+};
+
+
+
 
 
 /**
@@ -107,6 +128,9 @@ var argv = yargs
     })
     .command("revoke", "Revoke certificate via cert file", function(yargs){
         subcommands.revoke(yargs);
+    })
+    .command("getcacert", "Get CA certificate", function(yargs){
+        subcommands.getcacert(yargs);
     })
     .demandCommand(1)
     .help("h")

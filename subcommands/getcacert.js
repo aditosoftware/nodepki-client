@@ -1,15 +1,23 @@
 /**
- * Subcommand "get" to receive a certificate by serial number
+ * Subcommand 'getcacert'
  */
+
 
 var log = require('fancy-log');
 var httpclient = require('./../httpclient.js');
 var fs = require('fs');
 
-var get = function(serialno, outfile) {
-    log.info("Requesting issued certificate by serial number.");
 
-    httpclient.request('/certificates/' + serialno + '/', 'GET', null)
+var getcacert = function(ca, outfile, chain) {
+    // get ca cert file
+    log("Getting cert for " + ca + " CA  ...")
+
+    if(chain) {
+        log("Getting chain version ... ")
+        chain = 'chain/';
+    }
+
+    httpclient.request('/ca/certs/' + ca + '/' + chain, 'GET', null)
         .then(function(response){
             log.info("Received HTTP response :-)");
 
@@ -33,5 +41,4 @@ var get = function(serialno, outfile) {
         });
 };
 
-
-module.exports = get;
+module.exports = getcacert;
