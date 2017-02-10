@@ -35,7 +35,7 @@ if(fs.existsSync('config.yml')) {
     console.log("\
 **********************************************************************\n\
 ***   Please customize config.yml according to your environment    ***\n\
-***                     and restart NodePKI.                       ***\n\
+***                  and restart NodePKI-Client.                   ***\n\
 **********************************************************************");
 
     log("Server will quit now.");
