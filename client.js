@@ -34,7 +34,7 @@ var subcommands = {};
 subcommands.request = function(yargs) {
     var argv = yargs
         .option('csr', {
-            demand: true,
+            demand: false,
             describe: "CSR file to be processed",
             type: "string"
         })
