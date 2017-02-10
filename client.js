@@ -6,7 +6,7 @@
  */
 
 var http = require('http');
-var fs = require('fs');
+var fs = require('fs-extra');
 var log = require('fancy-log');
 var yaml = require('js-yaml');
 var yargs = require('yargs');
@@ -19,6 +19,29 @@ var subhandlers  = {
     revoke: require('./subcommands/revoke.js'),
     getcacert: require('./subcommands/getcacert.js')
 }
+
+
+/*
+ * Make sure there is a config file config.yml
+ */
+if(fs.existsSync('config.yml')) {
+    log.info("Reading config file config.yml ...");
+    global.config = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'));
+} else {
+    // There is no config file yet. Create one from config.yml.default and quit server.
+    log("No custom config file 'config.yml' found.")
+    fs.copySync('config.default.yml', 'config.yml');
+    log("Default config file was copied to config.yml.");
+    console.log("\
+**********************************************************************\n\
+***   Please customize config.yml according to your environment    ***\n\
+***                     and restart NodePKI.                       ***\n\
+**********************************************************************");
+
+    log("Server will quit now.");
+    process.exit();
+}
+
 
 
 log("Reading config file ...");
