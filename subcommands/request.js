@@ -17,9 +17,13 @@ var requestCert = function(csrarg, outfile) {
         if(csrarg === undefined) {
             tempdir = 'tmp/' + uuidV4() + '/';
             fs.ensureDirSync(tempdir),
-            log("Creating Key and CSR")
+            log("Creating Key and CSR");
 
-            var passphrase = readlineSync.question("Enter a new certificate key passphrase: ", { hideEchoBack: true });
+            var passphrase = readlineSync.question("Enter a new certificate key passphrase: [Press ENTER to skip] ", { hideEchoBack: true, defaultInput:'none' });
+                if(passphrase !== 'none') {
+                    var passrepeat = readlineSync.question("Repeat password: ", { hideEchoBack: true, defaultInput:'none' });
+                    if(passphrase !== passrepeat) { throw "Passwords do not match!"; }
+                }
             var country = readlineSync.question("County [DE]: ", { defaultInput: 'DE' });
             var state = readlineSync.question("State [Bayern]: ", { defaultInput: 'Bayern' });
             var locality = readlineSync.question("Locality [Geisenhausen]: ", { defaultInput: 'Geisenhausen' });
@@ -27,11 +31,13 @@ var requestCert = function(csrarg, outfile) {
             var commonname = readlineSync.question("CommonName [example.com]: ", { defaultInput: 'example.adito.de' });
 
             // Interactive mode
-            exec('openssl genrsa -aes256 -out key.pem -passout pass:' + passphrase + ' 2048', {
+            passparam = (passphrase === 'none') ? '' : '-aes256 -passout pass:' + passphrase;
+            exec('openssl genrsa -out key.pem ' + passparam + ' 2048', {
                 cwd: tempdir
             }, function() {
                 // Create csr.
-                exec('openssl req -config ../../openssl.cnf -key key.pem -new -sha256 -out cert.csr -passin pass:' + passphrase + ' -subj "/C='+country+'/ST='+state+'/L='+locality+'/O='+organization+'/CN='+commonname+'"', {
+                passparam = (passphrase === 'none') ? '' : '-passin pass:' + passphrase;
+                exec('openssl req -config ../../openssl.cnf -key key.pem -new -sha256 -out cert.csr ' + passparam + ' -subj "/C='+country+'/ST='+state+'/L='+locality+'/O='+organization+'/CN='+commonname+'"', {
                     cwd: tempdir
                 }, function() {
                     // ready
@@ -43,8 +49,7 @@ var requestCert = function(csrarg, outfile) {
         } else {
             resolve();
         }
-    })
-    .then(function() {
+    }).then(function() {
         //Read cert data from file
         fs.readFile('./' + csr, 'utf8', function(err, csrdata){
             if(csrarg === undefined) { fs.removeSync(tempdir); }
@@ -88,9 +93,15 @@ var requestCert = function(csrarg, outfile) {
                     });
             } else {
                 log.error("Error reading file:" + err);
+                process.exit(1);
             }
         });
     })
+    .catch(function(err) {
+        // Promise rejected.
+        log("Could not request certificate. Reason: " + err);
+        process.exit(1);
+    });
 };
 
 module.exports = requestCert;

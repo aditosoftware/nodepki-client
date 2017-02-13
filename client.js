@@ -140,7 +140,7 @@ subcommands.getcacert = function(yargs) {
  */
 var argv = yargs
     .usage("Usage: $0 <subcommand> [options]")
-    .command("request", "Request a new certificate via .csr file", function(yargs){
+    .command("request", "Request a new certificate with or without .csr file", function(yargs){
         subcommands.request(yargs);
     })
     .command("list", "List issued certificates", function(yargs){
