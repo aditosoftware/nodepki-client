@@ -7,7 +7,9 @@ var httpclient = require('./../httpclient.js');
 var Table = require('easy-table');
 
 list = function(state) {
-    httpclient.request('/certificates/list/' + state + '/', 'GET', null)
+
+    var postdata = { state: state }
+    httpclient.request(global.apipath + '/certificates/list/', 'POST', postdata)
         .then(function(response){
             log.info("HTTP API request was successful");
 

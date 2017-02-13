@@ -53,6 +53,7 @@ global.config = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'));
  * request, list, get, revoke
  */
 var subcommands = {};
+global.apipath = '/api/v1';
 
 subcommands.request = function(yargs) {
     var argv = yargs
@@ -61,14 +62,16 @@ subcommands.request = function(yargs) {
             describe: "CSR file to be processed",
             type: "string"
         })
-        .option('outfile', {
+        .option('out', {
             demand: false,
-            describe: "Output file",
+            describe: "Output file (when using --csr) or directory",
             type: "string"
         })
-        .example("$0 request --csr cert.csr --outfile cert.pem", "Process cert.csr and write certificate to cert.pem")
+        .boolean('fullchain')
+        .example("$0 request --csr cert.csr --out cert.pem --fullchain", "Process cert.csr and write certificate + intermediate cert to cert.pem")
+        .example("$0 request --out mycert --fullchain", "Create CSR and write certificate + intermediate cert to cert.pem")
         .argv;
-    subhandlers.request(argv.csr, argv.outfile);
+    subhandlers.request(argv);
 };
 
 subcommands.list = function(yargs) {
@@ -86,7 +89,7 @@ subcommands.list = function(yargs) {
 
 subcommands.get = function(yargs) {
     var argv = yargs
-        .option('serialno', {
+        .option('serialnumber', {
             demand: true,
             describe: "Serial number of certificate",
             type: "string"
@@ -96,9 +99,9 @@ subcommands.get = function(yargs) {
             describe: "Output file",
             type: "string"
         })
-        .example("$0 get --serialno 1001 --outfile cert.pem", "Get certificate 1001 and save it to cert.pem in the current directory.")
+        .example("$0 get --serialnumber 1001 --outfile cert.pem", "Get certificate 1001 and save it to cert.pem in the current directory.")
         .argv;
-    subhandlers.get(argv.serialno, argv.outfile);
+    subhandlers.get(argv.serialnumber, argv.outfile);
 };
 
 subcommands.revoke = function(yargs) {

@@ -6,10 +6,11 @@ var log = require('fancy-log');
 var httpclient = require('./../httpclient.js');
 var fs = require('fs');
 
-var get = function(serialno, outfile) {
+var get = function(serialnumber, outfile) {
     log.info("Requesting issued certificate by serial number.");
 
-    httpclient.request('/certificates/' + serialno + '/', 'GET', null)
+    var postdata = { serialnumber:serialnumber };
+    httpclient.request(global.apipath + '/certificate/get/', 'POST', postdata)
         .then(function(response){
             log.info("Received HTTP response :-)");
 

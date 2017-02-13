@@ -12,12 +12,12 @@ var getcacert = function(ca, outfile, chain) {
     // get ca cert file
     log("Getting cert for " + ca + " CA  ...")
 
-    if(chain) {
-        log("Getting chain version ... ")
-        chain = 'chain/';
+    var postbody = {
+        ca: ca,
+        chain: chain
     }
 
-    httpclient.request('/ca/certs/' + ca + '/' + chain, 'GET', null)
+    httpclient.request(global.apipath + '/ca/cert/get/', 'POST', postbody)
         .then(function(response){
             log.info("Received HTTP response :-)");
 

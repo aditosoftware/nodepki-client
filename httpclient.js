@@ -52,7 +52,7 @@ var request = function(path, method, pushdata) {
             reject();
         });
 
-        if(method === 'PUT') {
+        if(method === 'POST') {
             var json = JSON.stringify(pushdata);
             req.write(json);
         }
