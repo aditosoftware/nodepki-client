@@ -29,16 +29,30 @@ Configure client in config.yml: Set IP-address and port of the NodePKI server ac
 
 ### Display subcommand overview:
 
-nodejs client.js help
+    nodejs client help
+
+### Display subcommand usage help:
+
+    nodejs client request --help
+
+### Request new certificate
+
+Create new key + certificate from scratch and store both in out/ directory
+
+    nodejs client request --out out/
+
+Create new key + certificate from scratch, add intermediate cert to cert and store in out/ directory
+
+    nodejs client request --out out/ --fullchain
+
+Create new certificate via existing .csr file and write certificate to out/cert.pem:
+
+    nodejs client request --csr certificate.csr --out out/cert.pem
 
 
-### Request new certificate via .csr file
+### Get list of issued certificates
 
-    nodejs client.js request --csr certificate.csr --outfile cert.pem
-
-### Get list of all issued certificates
-
-    nodejs client.js list --state all
+    nodejs client list --state all
 
 ... to list all issued certificates.
 
@@ -51,29 +65,30 @@ Valid states:
 
 ### Get certificate by serial number
 
-    nodejs client.js get --serialno 324786EA --outfile cert.pem
+... and store certificate to out/cert.pem
 
+    nodejs client get --serialnumber 324786EA --out out/cert.pem
 
 
 ### Revoke issued certificate
 
-    nodejs client.js revoke --cert cert.pem
+    nodejs client revoke --cert cert.pem
 
 
-### Get CA Certificates
+### Get CA certificates
 
 Get root certificate:
 
     nodejs client getcacert --ca root
 
-Write received certificate to file:
+Write root certificate to file:
 
-    nodejs client getcacert --ca root --outfile root.cert.pem
+    nodejs client getcacert --ca root --out out/root.cert.pem
 
 Get intermediate certificate:
 
     nodejs client getcacert --ca intermediate
 
-Get intermediate CA chain and write to file:
+Get intermediate certificate + root certificate (=cert chain) and write to file:
 
-    nodejs client getcacert --ca intermediate  --chain --outfile ca-chain.cert.pem
+    nodejs client getcacert --ca intermediate --chain --out out/ca-chain.cert.pem
