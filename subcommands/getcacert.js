@@ -8,7 +8,7 @@ var httpclient = require('./../httpclient.js');
 var fs = require('fs');
 
 
-var getcacert = function(ca, outfile, chain) {
+var getcacert = function(ca, out, chain) {
     // get ca cert file
     log("Getting cert for " + ca + " CA  ...")
 
@@ -24,10 +24,10 @@ var getcacert = function(ca, outfile, chain) {
             if(response.success) {
                 log.info("Successfully received requested certificate :-)");
 
-                if(typeof outfile === 'string') {
+                if(typeof out === 'string') {
                     // Write certificate to file
-                    fs.writeFileSync(outfile, response.cert);
-                    log("Cert written to " + outfile);
+                    fs.writeFileSync(out, response.cert);
+                    log("Cert written to " + out);
                 } else {
                     console.log("\r\n\r\n" + response.cert + "\r\n");
                 }

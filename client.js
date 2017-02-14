@@ -61,7 +61,7 @@ subcommands.request = function(yargs) {
         })
         .option('out', {
             demand: false,
-            describe: "Output file (when using --csr) or directory",
+            describe: "Output file (when using --csr) or output directory",
             type: "string"
         })
         .boolean('fullchain')
@@ -80,6 +80,7 @@ subcommands.list = function(yargs) {
             type: 'string'
         })
         .example("$0 list --state revoked", "List all revoked certificates.")
+        .example("$0 list", "List all certificates")
         .argv;
     subhandlers.list(argv.state);
 };
@@ -91,14 +92,14 @@ subcommands.get = function(yargs) {
             describe: "Serial number of certificate",
             type: "string"
         })
-        .option('outfile', {
+        .option('out', {
             demand: false,
             describe: "Output file",
             type: "string"
         })
-        .example("$0 get --serialnumber 1001 --outfile cert.pem", "Get certificate 1001 and save it to cert.pem in the current directory.")
+        .example("$0 get --serialnumber 1001 --out cert.pem", "Get certificate 1001 and save it to cert.pem in the current directory.")
         .argv;
-    subhandlers.get(argv.serialnumber, argv.outfile);
+    subhandlers.get(argv.serialnumber, argv.out);
 };
 
 subcommands.revoke = function(yargs) {
@@ -120,15 +121,15 @@ subcommands.getcacert = function(yargs) {
             describe: "Choose which ca cert to retrieve. Can be 'root' or 'intermediate'",
             type: 'string'
         })
-        .option('outfile', {
+        .option('out', {
             demand: false,
             describe: "Output file",
             type: "string"
         })
         .boolean('chain')
-        .example("$0 getcacert --ca root", "Get ca cert of root ca")
+        .example("$0 getcacert --ca root --out ca.cert.pem", "Get ca cert of root ca and save it to ca.cert.pem")
         .argv;
-    subhandlers.getcacert(argv.ca, argv.outfile, argv.chain);
+    subhandlers.getcacert(argv.ca, argv.out, argv.chain);
 };
 
 
