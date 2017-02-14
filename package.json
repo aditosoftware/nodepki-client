@@ -28,6 +28,7 @@
       "js-yaml": "3.x",
       "easy-table": "1.0.x",
       "fs-extra": "2.0.x",
-      "readline-sync": "1.4.x"
+      "readline-sync": "1.4.x",
+      "uuid": "3.0.x"
   }
 }
