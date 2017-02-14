@@ -7,7 +7,7 @@ node_modules/
 cert.csr
 cert.pem
 
-config.yml
+config/
 
 tmp/
 out/
