@@ -5,3 +5,11 @@
 server:
     ip: 127.0.0.1
     port: 8081
+
+applicant: "John Doe"
+
+csr_defaults:
+    country: "CY"
+    state: "Cyberstate"
+    locality: "Cybertown"
+    organization: "Cyber Inc."

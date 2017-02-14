@@ -27,11 +27,11 @@ var requestCert = function(argv) {
                     var passrepeat = readlineSync.question("Repeat password: ", { hideEchoBack: true, defaultInput:'none' });
                     if(passphrase !== passrepeat) { throw "Passwords do not match!"; }
                 }
-            var country = readlineSync.question("County [DE]: ", { defaultInput: 'DE' });
-            var state = readlineSync.question("State [Bayern]: ", { defaultInput: 'Bayern' });
-            var locality = readlineSync.question("Locality [Geisenhausen]: ", { defaultInput: 'Geisenhausen' });
-            var organization = readlineSync.question("Organization [ADITO Software GmbH]: ", { defaultInput: 'ADITO Software GmbH' });
-            var commonname = readlineSync.question("CommonName [example.com]: ", { defaultInput: 'example.adito.de' });
+            var country = readlineSync.question("County ["+global.config.csr_defaults.country+"]: ", { defaultInput: global.config.csr_defaults.country });
+            var state = readlineSync.question("State ["+global.config.csr_defaults.state+"]: ", { defaultInput: global.config.csr_defaults.state });
+            var locality = readlineSync.question("Locality ["+global.config.csr_defaults.locality+"]: ", { defaultInput: global.config.csr_defaults.locality });
+            var organization = readlineSync.question("Organization ["+global.config.csr_defaults.organization+"]: ", { defaultInput: global.config.csr_defaults.organization });
+            var commonname = readlineSync.question("CommonName [example.tld]: ", { defaultInput: 'example.tld' });
 
             // Interactive mode
             passparam = (passphrase === 'none') ? '' : '-aes256 -passout pass:' + passphrase;
@@ -58,7 +58,7 @@ var requestCert = function(argv) {
             if(err == null) {
                 var pushdata = {
                     csr: csrdata,
-                    applicant: "Thomas Leister"
+                    applicant: global.config.applicant
                 }
 
                 var cert;
