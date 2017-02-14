@@ -37,9 +37,9 @@ Configure client in config.yml: Set IP-address and port of the NodePKI server ac
 
 ### Request new certificate
 
-Create new key + certificate from scratch and store both in out/ directory
+Create new key + certificate from scratch and store both in out/ directory. Lifetime: 7 days.
 
-    nodejs client request --out out/
+    nodejs client request --lifetime 7 --out out/
 
 Create new key + certificate from scratch, add intermediate cert to cert and store in out/ directory
 
@@ -48,6 +48,8 @@ Create new key + certificate from scratch, add intermediate cert to cert and sto
 Create new certificate via existing .csr file and write certificate to out/cert.pem:
 
     nodejs client request --csr certificate.csr --out out/cert.pem
+
+Lifetime defaults to *cert_lifetime_default* setting in config.yml
 
 
 ### Get list of issued certificates

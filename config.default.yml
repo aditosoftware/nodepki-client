@@ -13,3 +13,5 @@ csr_defaults:
     state: "Cyberstate"
     locality: "Cybertown"
     organization: "Cyber Inc."
+
+cert_lifetime_default: 365

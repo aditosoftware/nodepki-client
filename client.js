@@ -65,6 +65,12 @@ subcommands.request = function(yargs) {
             type: "string"
         })
         .boolean('fullchain')
+        .option('lifetime', {
+            demand: false,
+            describe: "Lifetime of certificate in days",
+            type: "number",
+            default: global.config.defaultlifetime
+        })
         .example("$0 request --csr cert.csr --out cert.pem --fullchain", "Process cert.csr and write certificate + intermediate cert to cert.pem")
         .example("$0 request --out mycert --fullchain", "Create CSR and write certificate + intermediate cert to cert.pem")
         .argv;
