@@ -2,12 +2,12 @@
 
 *A simple command-line client for the NodePKI server*
 
----
 
 ## Dependencies
 
 * NodeJS
 * NPM
+* OpenSSL
 
 
 ## Setup
