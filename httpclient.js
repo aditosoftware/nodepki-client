@@ -1,6 +1,7 @@
 /**
  * HTTP helper function
  * Makes HTTP requests to server API
+ * Makes only GET and POST requests with JSON Body.
  */
 
 var log = require('fancy-log');
@@ -48,8 +49,7 @@ var request = function(path, method, pushdata) {
         });
 
         req.on('error', function(error) {
-            log.error("There was a HTTP error: " + error);
-            reject();
+            reject(error);
         });
 
         if(method === 'POST') {
