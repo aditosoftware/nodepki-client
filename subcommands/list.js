@@ -34,6 +34,8 @@ list = function(state) {
 
                         t.cell('State', state)
                         t.cell('Serial No', cert.serial)
+                        t.cell('Expiration time', cert.expirationtime)
+                        t.cell('Revocation time', cert.revocationtime)
                         t.cell('Subject', cert.subject)
                         t.newRow();
                     });
