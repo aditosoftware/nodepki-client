@@ -80,8 +80,15 @@ rootcheck.checkCert().then(function() {
                 type: "number",
                 default: global.config.defaultlifetime
             })
+            .option('type', {
+                demand: false,
+                describe: "Certificate type: 'server' or 'client'. Default: server.",
+                type: "string",
+                default: 'server'
+            })
             .example("$0 request --csr cert.csr --out cert.pem --fullchain", "Process cert.csr and write certificate + intermediate cert to cert.pem")
-            .example("$0 request --out mycert --fullchain", "Create CSR and write certificate + intermediate cert to cert.pem")
+            .example("$0 request --out out --fullchain", "Create CSR and write certificate + intermediate cert to out/cert.pem")
+            .example("$0 request --out out --type client", "Create client certificate.")
             .argv;
         subhandlers.request(argv);
     };

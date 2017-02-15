@@ -14,6 +14,7 @@ var requestCert = function(argv) {
     var csr = argv.csr;
     var out = argv.out
     var lifetime = argv.lifetime ? argv.lifetime : global.config.cert_lifetime_default;
+    var type = argv.type === 'client' ? 'client' : 'server';
 
     var tempdir;
 
@@ -60,7 +61,8 @@ var requestCert = function(argv) {
                 var pushdata = {
                     csr: csrdata,
                     applicant: global.config.applicant,
-                    lifetime: lifetime
+                    lifetime: lifetime,
+                    type: type
                 }
 
                 var cert;

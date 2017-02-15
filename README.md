@@ -54,6 +54,10 @@ Create new certificate via existing .csr file and write certificate to out/cert.
 
 Lifetime defaults to *cert_lifetime_default* setting in config.yml
 
+Create a new client certificate:
+
+    nodejs client request --type client --out out/
+
 
 ### Get list of issued certificates
 
