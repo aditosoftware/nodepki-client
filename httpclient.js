@@ -5,20 +5,24 @@
  */
 
 var log = require('fancy-log');
-var http = require('http');
+var https = require('https');
+var fs = require('fs-extra');
 
 var request = function(path, method, pushdata) {
     return new Promise(function(resolve, reject) {
-        log.info("Making HTTP request to http://" + global.config.server.ip + ":" + global.config.server.port + path + " via " + method);
+        log.info("Making HTTPS request to https://" + global.config.server.api.hostname + ":" + global.config.server.api.port + path + " via " + method);
 
-        var req = http.request({
-            host: global.config.server.ip,
-            port: global.config.server.port,
+        var rootcert = fs.readFileSync('root.cert.pem');
+
+        var req = https.request({
+            host: global.config.server.api.hostname,
+            port: global.config.server.api.port,
             path: path,
             method: method,
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            ca: rootcert
         }, function (response){
             var body = '';
 

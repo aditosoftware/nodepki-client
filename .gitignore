@@ -11,3 +11,6 @@ config/
 
 tmp/
 out/
+
+root.cert.pem
+root.cert.tmp

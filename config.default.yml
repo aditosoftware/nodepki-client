@@ -3,8 +3,12 @@
 ###
 
 server:
-    ip: 127.0.0.1
-    port: 8081
+    api:
+        hostname: ca.adito.local
+        port: 8081
+    public:
+        hostname: ca.adito.local
+        port: 8080
 
 applicant: "John Doe"
 
