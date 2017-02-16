@@ -16,8 +16,8 @@ server:
 ###
 
 user:
-    username: thomas
-    password: test
+    username: api_username
+    password: api_password
 
 
 ###
