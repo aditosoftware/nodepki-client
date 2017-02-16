@@ -15,7 +15,13 @@ revoke = function(certfile) {
             // console.log(certdata);
 
             var pushdata = {
-                cert: certdata
+                data: {
+                    cert: certdata
+                },
+                auth: {
+                    username: global.config.user.username,
+                    password: global.config.user.password
+                }
             };
 
             httpclient.request('/certificates/revoke/', 'PUT', pushdata)

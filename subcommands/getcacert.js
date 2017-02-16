@@ -13,8 +13,10 @@ var getcacert = function(ca, out, chain) {
     log("Getting cert for " + ca + " CA  ...")
 
     var postbody = {
-        ca: ca,
-        chain: chain
+        data: {
+            ca: ca,
+            chain: chain
+        }
     }
 
     httpclient.request(global.apipath + '/ca/cert/get/', 'POST', postbody)

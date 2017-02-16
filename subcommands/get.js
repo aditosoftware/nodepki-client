@@ -9,7 +9,16 @@ var fs = require('fs');
 var get = function(serialnumber, out) {
     log.info("Requesting issued certificate by serial number.");
 
-    var postdata = { serialnumber:serialnumber };
+    var postdata = {
+        data: {
+            serialnumber:serialnumber
+        },
+        auth: {
+            username: global.config.user.username,
+            password: global.config.user.password
+        }
+    };
+    
     httpclient.request(global.apipath + '/certificate/get/', 'POST', postdata)
         .then(function(response){
             log.info("Received HTTP response :-)");

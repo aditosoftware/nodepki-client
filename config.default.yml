@@ -10,7 +10,9 @@ server:
         hostname: ca.adito.local
         port: 8080
 
-applicant: "John Doe"
+user:
+    username: thomas
+    password: test
 
 csr_defaults:
     country: "CY"

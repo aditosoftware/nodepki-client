@@ -8,7 +8,16 @@ var Table = require('easy-table');
 
 list = function(state) {
 
-    var postdata = { state: state }
+    var postdata = {
+        data: {
+            state: state
+        },
+        auth: {
+            username: global.config.user.username,
+            password: global.config.user.password
+        }
+    };
+    
     httpclient.request(global.apipath + '/certificates/list/', 'POST', postdata)
         .then(function(response){
             log.info("HTTP API request was successful");

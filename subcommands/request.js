@@ -59,10 +59,15 @@ var requestCert = function(argv) {
         fs.readFile('./' + csr, 'utf8', function(err, csrdata){
             if(err == null) {
                 var pushdata = {
-                    csr: csrdata,
-                    applicant: global.config.applicant,
-                    lifetime: lifetime,
-                    type: type
+                    data: {
+                        csr: csrdata,
+                        lifetime: lifetime,
+                        type: type
+                    },
+                    auth: {
+                        username: global.config.user.username,
+                        password: global.config.user.password
+                    }
                 }
 
                 var cert;
@@ -166,9 +171,8 @@ var requestCert = function(argv) {
                         } else {
                             log.error(">>> Failed to retrieve certificate. :( <<<");
 
-                            log.error("Errors: " + JSON.stringify(response.errors));
+                            log.error(">>> Errors: " + JSON.stringify(response.errors));
 
-                            log.error("Maybe there was already another certificate issued from the submitted .csr?");
                             log.error("For more information see NodePKI log.");
                             if(csrarg === undefined) { fs.removeSync(tempdir); }
                             process.exit(1);
