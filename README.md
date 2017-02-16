@@ -19,13 +19,7 @@
 
 ## Configure
 
-Copy config.default.yml to config/config.yml
-
-Configure client in config.yml: Set IP-address and port of the NodePKI server according to the config.yml of your server.
-
-    server:
-        ip: localhost
-        port: 8081
+Copy config.default.yml to config/config.yml and set the settings according to your environment.
 
 
 ## Usage

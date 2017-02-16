@@ -1,5 +1,5 @@
 ###
-### Client config: IP-Adress and port of the NodePKI server
+### Hostnames and ports of the NodePKI server
 ###
 
 server:
@@ -10,14 +10,29 @@ server:
         hostname: ca.adito.local
         port: 8080
 
+
+###
+### Username and password to authenticate with
+###
+
 user:
     username: thomas
     password: test
+
+
+###
+### CSR default values
+###
 
 csr_defaults:
     country: "CY"
     state: "Cyberstate"
     locality: "Cybertown"
     organization: "Cyber Inc."
+
+
+###
+### Default certificate lifetime
+###
 
 cert_lifetime_default: 365
