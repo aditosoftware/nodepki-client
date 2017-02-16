@@ -88,7 +88,9 @@ var requestCert = function(argv) {
                                     var getcacert = require('./getcacert.js');
 
                                     var postdata = {
-                                        ca: 'intermediate'
+                                        data: {
+                                            ca: 'intermediate'
+                                        }
                                     };
                                     httpclient.request(global.apipath + '/ca/cert/get/', 'POST', postdata).then(function(response){
                                         if(response.success) {
