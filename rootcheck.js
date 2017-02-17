@@ -55,28 +55,29 @@ var checkCert = function() {
     return new Promise(function(resolve, reject) {
         log("Checking Root Cert ... ");
 
-        if(fs.existsSync('root.cert.pem')) {
+        if(fs.existsSync('data/root.cert.pem')) {
             log("Root Cert okay.")
             resolve();
         } else {
             getCert().then(function(cert) {
-                fs.writeFileSync('root.cert.tmp', cert);
+                fs.ensureDirSync('tmp');
+                fs.writeFileSync('tmp/root.cert.tmp', cert);
                 log("Downloaded root cert from API server.")
 
                 // Fingerprint verification ...
-                getFingerprint('root.cert.tmp').then(function(fingerprint) {
+                getFingerprint('tmp/root.cert.tmp').then(function(fingerprint) {
                     log(">>> Fingerprint of Root CA is: " + fingerprint);
                     console.log("Compare fingerprint to fingerprint output of the API server startup log");
                     var answer = readlineSync.question("and type 'y' if fingerprint matches Root CA fingerprint: ", { defaultInput: 'n' });
 
                     if(answer.toLowerCase() === 'y') {
                         log("Root CA accepted.")
-                        fs.copySync('root.cert.tmp', 'root.cert.pem');
-                        fs.removeSync('root.cert.tmp')
+                        fs.copySync('tmp/root.cert.tmp', 'data/root.cert.pem');
+                        fs.removeSync('tmp/root.cert.tmp')
                         resolve();
                     } else {
-                        log("Root CA certificate not accepted. Deleting root.cert.pem.")
-                        fs.removeSync('root.cert.tmp')
+                        log("Root CA certificate not accepted. Deleting tmp/root.cert.tmp.")
+                        fs.removeSync('tmp/root.cert.tmp')
                         process.exit();
                     }
                 })

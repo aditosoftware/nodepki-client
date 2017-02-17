@@ -12,7 +12,7 @@ var request = function(path, method, pushdata) {
     return new Promise(function(resolve, reject) {
         log.info("Making HTTPS request to https://" + global.config.server.api.hostname + ":" + global.config.server.api.port + path + " via " + method);
 
-        var rootcert = fs.readFileSync('root.cert.pem');
+        var rootcert = fs.readFileSync('data/root.cert.pem');
 
         var req = https.request({
             host: global.config.server.api.hostname,

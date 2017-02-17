@@ -3,14 +3,14 @@
 ##
 
 node_modules/
+data/
+tmp/
+
+
+###
+### Dev test data
+###
 
 cert.csr
 cert.pem
-
-config/
-
-tmp/
 out/
-
-root.cert.pem
-root.cert.tmp
