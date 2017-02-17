@@ -3,7 +3,8 @@
  */
 
 var log = require('fancy-log');
-var
+var fs = require('fs-extra');
+var httpclient = require('./../httpclient.js');
 
 
 revoke = function(certfile) {
@@ -24,7 +25,7 @@ revoke = function(certfile) {
                 }
             };
 
-            httpclient.request('/certificates/revoke/', 'PUT', pushdata)
+            httpclient.request(global.apipath + '/certificate/revoke/', 'POST', pushdata)
                 .then(function(response) {
                     log.info("HTTP request successful.");
 
