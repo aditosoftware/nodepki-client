@@ -39,17 +39,25 @@ var requestCert = function(argv) {
             passparam = (passphrase === 'none') ? '' : '-aes256 -passout pass:' + passphrase;
             exec('openssl genrsa -out key.pem ' + passparam + ' 2048', {
                 cwd: tempdir
-            }, function() {
-                // Create csr.
-                passparam = (passphrase === 'none') ? '' : '-passin pass:' + passphrase;
-                exec('openssl req -config ../../openssl.cnf -key key.pem -new -sha256 -out cert.csr ' + passparam + ' -subj "/C='+country+'/ST='+state+'/L='+locality+'/O='+organization+'/CN='+commonname+'"', {
-                    cwd: tempdir
-                }, function() {
-                    // ready
-                    csr = tempdir + 'cert.csr';
-                    log("CSR created. Ready.");
-                    resolve();
-                })
+            }, function(error, stdout, stderr) {
+                if(!error) {
+                    // Create csr.
+                    passparam = (passphrase === 'none') ? '' : '-passin pass:' + passphrase;
+                    exec('openssl req -config ../../openssl.cnf -key key.pem -new -sha256 -out cert.csr ' + passparam + ' -subj "/C='+country+'/ST='+state+'/L='+locality+'/O='+organization+'/CN='+commonname+'"', {
+                        cwd: tempdir
+                    }, function(error, stdout, stderr) {
+                        if(!error) {
+                            // ready
+                            csr = tempdir + 'cert.csr';
+                            log("CSR created. Ready.");
+                            resolve();
+                        } else {
+                            reject("Could not create .csr: " + error);
+                        }
+                    });
+                } else {
+                    reject("Could not create .csr: " + error);
+                }
             });
         } else {
             resolve();
