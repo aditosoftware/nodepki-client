@@ -3,12 +3,10 @@
 ###
 
 server:
-    api:
-        hostname: ca.adito.local
-        port: 8081
-    public:
-        hostname: ca.adito.local
-        port: 8080
+    hostname: ca.adito.local
+    port_plain: 8080
+    port_tls: 443
+    tls: false
 
 
 ###

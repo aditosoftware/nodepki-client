@@ -4,26 +4,18 @@
  * Makes only GET and POST requests with JSON Body.
  */
 
-var log = require('fancy-log');
-var https = require('https');
-var fs = require('fs-extra');
+var log     = require('fancy-log');
+var http    = require('http');
+var https   = require('https');
+var fs      = require('fs-extra');
+var rootcheck = require('./rootcheck.js');
 
 var request = function(path, method, pushdata) {
     return new Promise(function(resolve, reject) {
-        log.info("Making HTTPS request to https://" + global.config.server.api.hostname + ":" + global.config.server.api.port + path + " via " + method);
+        log.info("Requesting " + (global.config.server.tls ? 'https' : 'http') + "://" + global.config.server.hostname + ":" + (global.config.server.tls ? global.config.server.port_tls : global.config.server.port_plain) + path + " via " + method);
 
-        var rootcert = fs.readFileSync('data/root.cert.pem');
 
-        var req = https.request({
-            host: global.config.server.api.hostname,
-            port: global.config.server.api.port,
-            path: path,
-            method: method,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            ca: rootcert
-        }, function (response){
+        var httpresponse = function(response) {
             var body = '';
 
             response.on('data', function(chunk) {
@@ -50,19 +42,57 @@ var request = function(path, method, pushdata) {
                     resolve(response);
                 }
             });
+        };
+
+        new Promise(function(resolve, reject) {
+            if(config.server.tls) {
+                rootcheck.checkCert().then(function(){
+                    var rootcert = fs.readFileSync('data/root.cert.pem');
+
+                    var req = https.request({
+                        host: global.config.server.hostname,
+                        port: global.config.server.port_tls,
+                        path: path,
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        ca: rootcert
+                    }, httpresponse);
+                    resolve(req);
+                })
+                .catch(function(err) {
+                    reject("Could not check root cert.");
+                });
+
+            } else {
+                var req = http.request({
+                    host: global.config.server.hostname,
+                    port: global.config.server.port_plain,
+                    path: path,
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }, httpresponse);
+                resolve(req);
+            }
+        }).then(function(req){
+            req.on('error', function(error) {
+                reject(error);
+            });
+
+            if(method === 'POST') {
+                var json = JSON.stringify(pushdata);
+                req.write(json);
+            }
+
+            // Send request
+            req.end();
+        })
+        .catch(function(err) {
+            reject(err)
         });
-
-        req.on('error', function(error) {
-            reject(error);
-        });
-
-        if(method === 'POST') {
-            var json = JSON.stringify(pushdata);
-            req.write(json);
-        }
-
-        // Send request
-        req.end();
     });
 };
 

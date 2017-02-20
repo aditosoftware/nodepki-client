@@ -22,9 +22,9 @@ var getFingerprint = function(certfile) {
 var getCert = function() {
     return new Promise(function(resolve, reject) {
         var req = http.request({
-            host: global.config.server.public.hostname,
-            port: global.config.server.public.port,
-            path: '/root.cert.pem',
+            host: global.config.server.hostname,
+            port: global.config.server.port_plain,
+            path: '/public/root.cert.pem',
             method: 'GET',
             headers: {
                 'Content-Type': 'text/text'
@@ -53,10 +53,10 @@ var getCert = function() {
 
 var checkCert = function() {
     return new Promise(function(resolve, reject) {
-        log("Checking Root Cert ... ");
+        log("Checking Root cert ... ");
 
         if(fs.existsSync('data/root.cert.pem')) {
-            log("Root Cert okay.")
+            log("Root cert is installed.")
             resolve();
         } else {
             getCert().then(function(cert) {
