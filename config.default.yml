@@ -25,10 +25,10 @@ user:
 ###
 
 csr_defaults:
-    country: "CY"
-    state: "Cyberstate"
-    locality: "Cybertown"
-    organization: "Cyber Inc."
+    country: "DE"
+    state: "Germany"
+    locality: "Geisenhausen"
+    organization: "ADITO Software GmbH"
 
 
 ###
