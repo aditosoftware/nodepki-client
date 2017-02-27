@@ -21,7 +21,7 @@ var requestCert = function(argv) {
     new Promise(function(resolve, reject) {
         if(csrarg === undefined) {
             tempdir = 'tmp/' + uuidV4() + '/';
-            fs.ensureDirSync(tempdir),
+            fs.ensureDirSync(tempdir);
             log("Creating Key and CSR");
 
             var passphrase = readlineSync.question("Enter a new certificate key passphrase: [Press ENTER to skip] ", { hideEchoBack: true, defaultInput:'none' });
