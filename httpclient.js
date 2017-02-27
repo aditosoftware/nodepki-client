@@ -45,7 +45,7 @@ var request = function(path, method, pushdata) {
         };
 
         new Promise(function(resolve, reject) {
-            if(config.server.tls) {
+            if(global.config.server.tls) {
                 rootcheck.checkCert().then(function(){
                     var rootcert = fs.readFileSync('data/root.cert.pem');
 
