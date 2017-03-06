@@ -24,7 +24,7 @@ var getCert = function() {
         var req = http.request({
             host: global.config.server.hostname,
             port: global.config.server.port_plain,
-            path: '/public/root.cert.pem',
+            path: '/public/ca/root/cert',
             method: 'GET',
             headers: {
                 'Content-Type': 'text/text'
