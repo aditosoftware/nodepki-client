@@ -3,7 +3,8 @@
 ###
 
 server:
-    hostname: ca.adito.local
+    # E.g.: ca.adito.local
+    hostname: CA_API_SERVER_URL
     port_plain: 8080
     port_tls: 443
     tls: false
@@ -14,8 +15,10 @@ server:
 ###
 
 user:
-    username: api_username
-    password: api_password
+    # E.g.: Thomas
+    username: API_USERNAME
+    # E.g.: my-super-secret-password
+    password: API_PASSWORD
 
 
 ###
@@ -23,14 +26,19 @@ user:
 ###
 
 csr_defaults:
-    country: "DE"
-    state: "Germany"
-    locality: "Geisenhausen"
-    organization: "ADITO Software GmbH"
+    # E.g.: DE
+    country: COUNTRY_CODE
+    # E.g.: Bavaria
+    state: STATE_NAME
+    # E.g.: Geisenhausen
+    locality: LOCALITY_NAME
+    # E.g.: ADITO Software GmbH
+    organization: ORGANIZATION_NAME
 
 
 ###
 ### Default certificate lifetime
 ###
 
-cert_lifetime_default: 365
+# E.g.: 365
+cert_lifetime_default: CERT_LIFETIME_IN_DAYS
