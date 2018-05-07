@@ -5,9 +5,12 @@
 server:
     # E.g.: ca.adito.local
     hostname: CA_API_SERVER_URL
-    port_plain: 8080
-    port_tls: 443
-    tls: false
+    # E.g.: 8080
+    port_plain: CA_API_SERVER_PLAIN_PORT
+    # E.g.: 443
+    port_tls: CA_API_SERVER_TLS_PORT
+    # E.g.: false
+    tls: CA_API_SERVER_TLS_ENABLED
 
 
 ###
@@ -41,4 +44,4 @@ csr_defaults:
 ###
 
 # E.g.: 365
-cert_lifetime_default: CERT_LIFETIME_IN_DAYS
+cert_lifetime_default: CERT_MAX_LIFETIME_IN_DAYS
